@@ -259,6 +259,10 @@ struct ContentView: View {
                                 }
                             }
                         }
+
+                        Section("Copyright Info") {
+                            Link("App Icon by SAM Designs from Noun Project (CC BY 3.0)", destination: URL(string: "https://thenounproject.com/browse/icons/term/physics/")!)
+                        }
                     }
                 }
                 .navigationTitle("SpriteKit Physics")
