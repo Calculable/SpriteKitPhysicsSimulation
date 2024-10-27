@@ -4,7 +4,11 @@ import UIKit
 
 struct ContentView: View {
 
-    @State private var scene = GameSceneWrapper()
+    let scene: GameScene = {
+        let gameScene = GameScene()
+        gameScene.scaleMode = .aspectFit
+        return gameScene
+    }()
 
     @State var resetOnNextUpdate: Bool = false
 
@@ -276,28 +280,18 @@ struct ContentView: View {
             }
 
             GeometryReader { geometry in
-                SpriteView(scene: scene.gameScene)
+                SpriteView(scene: scene)
                     .onAppear {
-                        scene.gameScene.size = geometry.size
-                        scene.gameScene.customDelegate = self
+                        scene.size = geometry.size
+                        scene.customDelegate = self
                     }
                     .onChange(of: geometry.size) {
-                        scene.gameScene.size = geometry.size
+                        scene.size = geometry.size
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .ignoresSafeArea()
             }
         }
-    }
-}
-
-@Observable
-class GameSceneWrapper {
-    let gameScene: GameScene
-
-    init() {
-        self.gameScene = GameScene()
-        self.gameScene.scaleMode = .aspectFit
     }
 }
 
