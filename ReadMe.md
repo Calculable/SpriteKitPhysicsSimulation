@@ -1,6 +1,6 @@
 # SpriteKit Physics Simulator
 
-This project is a SpriteKit Physics Playground built using SwiftUI, SpriteKit, and UIKit, allowing users to interact with a physics-based simulation in a customizable environment.
+This project is a SpriteKit Physics Playground built using SwiftUI and SpriteKit, allowing you to interact with a physics-based simulation in a customizable environment.
 
 ![SpriteKit Physics App Icon](SpriteKitPhysicsSimulation/Documentation/icon.png)
 
