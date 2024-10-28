@@ -4,6 +4,7 @@ protocol GameSceneDelegate {
     func getNode() -> SKNode
     func getGravity() -> CGVector
     var shouldReset: Bool { get }
+    func selectNode(_ node: SKNode?)
 }
 
 @objcMembers
@@ -35,12 +36,22 @@ class GameScene: SKScene {
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            let node = customDelegate.getNode()
-            node.position = CGPoint(x: touch.location(in: self).x, y: touch.location(in: self).y)
-            node.physicsBody?.categoryBitMask = PhysicsCategories.node
-            physicsBody?.collisionBitMask = PhysicsCategories.node
-            node.physicsBody?.contactTestBitMask = PhysicsCategories.node
-            addChild(node)
+
+            let location = touch.location(in: self)
+            let tappedNodes = nodes(at: location)
+
+            if let firstNode = tappedNodes.first {
+                customDelegate.selectNode(firstNode)
+            } else {
+                // Add a new node
+                let node = customDelegate.getNode()
+                node.position = CGPoint(x: location.x, y: location.y)
+                node.physicsBody?.categoryBitMask = PhysicsCategories.node
+                physicsBody?.collisionBitMask = PhysicsCategories.node
+                node.physicsBody?.contactTestBitMask = PhysicsCategories.node
+                addChild(node)
+                customDelegate.selectNode(nil)
+            }
         }
     }
 
