@@ -4,6 +4,8 @@ import UIKit
 
 struct ContentView: View {
 
+    let musicNode = SKAudioNode(fileNamed: "TheEntertainer.mp3")
+
     private let scene: GameScene = {
         let gameScene = GameScene()
         gameScene.scaleMode = .aspectFit
@@ -15,7 +17,7 @@ struct ContentView: View {
 
     //Segmented Control Properties
     enum ViewOption: String, CaseIterable, Identifiable {
-        case scene, nodes, actions
+        case scene, nodes, actions, audio
         var id: String { self.rawValue }
     }
 
@@ -103,6 +105,7 @@ struct ContentView: View {
                             Text("Scene").tag(ViewOption.scene)
                             Text("Nodes").tag(ViewOption.nodes)
                             Text("Actions").tag(ViewOption.actions)
+                            Text("Audio").tag(ViewOption.audio)
                         }
                         .pickerStyle(SegmentedPickerStyle())
 
@@ -113,10 +116,14 @@ struct ContentView: View {
                                 nodesView
                             case .actions:
                                 actionsView
+                            case .audio:
+                                audioView
                         }
 
                         Section("Copyright Info") {
                             Link("App Icon by SAM Designs from Noun Project (CC BY 3.0)", destination: URL(string: "https://thenounproject.com/browse/icons/term/physics/")!)
+                            Link("\"The Entertainer\" Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 License", destination: URL(string: "https://incompetech.com/music/royalty-free/music.html")!)
+
                         }
                     }
                 }
@@ -135,6 +142,9 @@ struct ContentView: View {
                     .onAppear {
                         scene.size = geometry.size
                         scene.customDelegate = self
+                        scene.addChild(musicNode)
+
+                        musicNode.run(SKAction.pause())
                     }
                     .onChange(of: geometry.size) {
                         scene.size = geometry.size
@@ -389,27 +399,27 @@ struct ContentView: View {
 
             //Not supported on SKShapeNode
             /*Section("Resize") {
-                LabeledFloatInput(value: $resizeWidth, text: "↔️ Width")
-                LabeledFloatInput(value: $resizeHeight, text: "↕️ Height")
-                LabeledFloatInput(value: $resizeDuration, text: "⏱️ Duration")
+             LabeledFloatInput(value: $resizeWidth, text: "↔️ Width")
+             LabeledFloatInput(value: $resizeHeight, text: "↕️ Height")
+             LabeledFloatInput(value: $resizeDuration, text: "⏱️ Duration")
 
-                Button("Run!") {
-                    let action = SKAction.resize(toWidth: CGFloat(resizeWidth), height: CGFloat(resizeHeight), duration: TimeInterval(resizeDuration))
-                    selectedNode?.run(action)
-                }
-            }*/
+             Button("Run!") {
+             let action = SKAction.resize(toWidth: CGFloat(resizeWidth), height: CGFloat(resizeHeight), duration: TimeInterval(resizeDuration))
+             selectedNode?.run(action)
+             }
+             }*/
 
             //Not supported on SKShapeNode
             /*Section("Reach") {
-                LabeledFloatInput(value: $reachX, text: "↔️ X")
-                LabeledFloatInput(value: $reachY, text: "↕️ Y")
-                LabeledFloatInput(value: $reachDuration, text: "⏱️ Duration")
+             LabeledFloatInput(value: $reachX, text: "↔️ X")
+             LabeledFloatInput(value: $reachY, text: "↕️ Y")
+             LabeledFloatInput(value: $reachDuration, text: "⏱️ Duration")
 
-                Button("Run!") {
-                    let action = SKAction.reach(to: .init(x: CGFloat(reachX), y: CGFloat(reachY)), rootNode: scene, duration: TimeInterval(reachDuration))
-                    selectedNode?.run(action)
-                }
-            }*/
+             Button("Run!") {
+             let action = SKAction.reach(to: .init(x: CGFloat(reachX), y: CGFloat(reachY)), rootNode: scene, duration: TimeInterval(reachDuration))
+             selectedNode?.run(action)
+             }
+             }*/
 
             Section("Move") {
                 LabeledFloatInput(value: $moveX, text: "↔️ X")
@@ -501,6 +511,55 @@ struct ContentView: View {
                 }
             }
         }.disabled(selectedNode == nil)
+    }
+
+    var audioView: some View {
+        Group {
+
+            Section("Controls") {
+                Button("Play") {
+                    musicNode.run(SKAction.play())
+                }
+
+                Button("Pause") {
+                    musicNode.run(SKAction.pause())
+                }
+
+                Button("Playbackrate +") {
+                    musicNode.run(SKAction.changePlaybackRate(by: 0.1, duration: TimeInterval(0.2)))
+                }
+
+                Button("Playbackrate -") {
+                    musicNode.run(SKAction.changePlaybackRate(by: -0.1, duration: TimeInterval(0.2)))
+                }
+
+                //Only for 3d
+                /*Button("Reverb +") {
+                 musicNode.run(SKAction.changeReverb(by: 0.1, duration: TimeInterval(0.2)))
+                 }
+
+                 Button("Reverb -") {
+                 musicNode.run(SKAction.changeReverb(by: -0.1, duration: TimeInterval(0.2)))
+                 }*/
+
+                Button("Volume +") {
+                    musicNode.run(SKAction.changeVolume(by: 0.1, duration: TimeInterval(0.2)))
+                }
+
+                Button("Volume -") {
+                    musicNode.run(SKAction.changeVolume(by: -0.1, duration: TimeInterval(0.2)))
+                }
+
+                //Only works with stereo files
+                /*Button("Stereo move right") {
+                 musicNode.run(SKAction.stereoPan(to: 1, duration: TimeInterval(0.2)))
+                 }
+
+                 Button("Stereo move left") {
+                 musicNode.run(SKAction.stereoPan(to: -1, duration: TimeInterval(0.2)))
+                 }*/
+            }
+        }
     }
 }
 
