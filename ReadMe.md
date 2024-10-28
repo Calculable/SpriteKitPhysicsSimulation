@@ -5,12 +5,10 @@ This project is a SpriteKit Physics Playground built using SwiftUI and SpriteKit
 ![SpriteKit Physics App Icon](SpriteKitPhysicsSimulation/Documentation/icon.png)
 
 ## Features
-- Dynamic Gravity Control: Adjust gravityX and gravityY to set directional gravitational forces.
-- Shape Customization: Modify object properties such as fill color, stroke color, line width, radius, and more.
-- Physics Attributes: Configure physical behaviors including: Gravity, density, friction, linear damping, and restitution.
-- Toggle options for dynamic motion, rotation allowance, and pinning.
-- Magnetism Simulation: Enable a magnetic field on objects, adjusting strength as desired.
-- Velocity Control: Set initial velocity to simulate motion in specified directions.
+- Gravity Control: Adjust gravityX and gravityY to set directional gravitational forces.
+- Physics Attributes: Configure physical behaviors
+- Actions: Select a node to apply different actions
+- Audio: Change properties of an AudioNode
 
 ![SpriteKit Physics App Icon](SpriteKitPhysicsSimulation/Documentation/screenshot.gif)
 
