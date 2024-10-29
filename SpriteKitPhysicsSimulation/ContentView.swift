@@ -444,7 +444,7 @@ struct ContentView: View {
                 LabeledFloatInput(value: $impulseDuration, text: "⏱️ Duration")
 
                 Button("Run!") {
-                    let action = SKAction.applyImpulse(.init(dx: CGFloat(forceX), dy: CGFloat(forceY)), duration: TimeInterval(forceDuration))
+                    let action = SKAction.applyImpulse(.init(dx: CGFloat(impulseX), dy: CGFloat(impulseY)), duration: TimeInterval(forceDuration))
                     selectedNode?.run(action)
                 }
             }
