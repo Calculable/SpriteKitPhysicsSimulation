@@ -59,7 +59,11 @@ class GameScene: SKScene {
         physicsWorld.gravity = customDelegate.getGravity()
 
         if customDelegate.shouldReset {
-            removeAllChildren()
+            for child in children {
+                if !(child is SKAudioNode) {
+                    child.removeFromParent()
+                }
+            }
         }
     }
 }

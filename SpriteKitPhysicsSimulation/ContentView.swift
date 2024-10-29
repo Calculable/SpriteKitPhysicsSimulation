@@ -8,7 +8,7 @@ struct ContentView: View {
 
     private let scene: GameScene = {
         let gameScene = GameScene()
-        gameScene.scaleMode = .aspectFit
+        gameScene.scaleMode = .resizeFill
         return gameScene
     }()
 
@@ -140,17 +140,12 @@ struct ContentView: View {
             GeometryReader { geometry in
                 SpriteView(scene: scene)
                     .onAppear {
-                        scene.size = geometry.size
                         scene.customDelegate = self
                         scene.addChild(musicNode)
 
                         musicNode.run(SKAction.pause())
                     }
-                    .onChange(of: geometry.size) {
-                        scene.size = geometry.size
-                    }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .ignoresSafeArea()
             }
         }
     }
@@ -504,7 +499,7 @@ struct ContentView: View {
 
             Section("Custom Action") {
                 Button("Run!") {
-                    let action = SKAction.customAction(withDuration: 1, actionBlock: { _, _ in
+                    let action = SKAction.customAction(withDuration: 1, actionBlock: { node, elapsedTime in
                         print("custom action")
                     })
                     selectedNode?.run(action)
